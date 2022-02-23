@@ -1,8 +1,8 @@
 class Darktable < Formula
   desc "An open source photography workflow application and raw developer"
   homepage "https://www.darktable.org"
-  url "https://github.com/darktable-org/darktable/releases/download/release-3.6.1/darktable-3.6.1.tar.xz"
-  sha256 "a2bfc7c103b824945457a9bfed9e52f007fa1d030f9dbcb3ff0327851be42d14"
+  url "https://github.com/darktable-org/darktable/releases/download/release-3.8.1/darktable-3.8.1.tar.xz"
+  sha256 "81ee069054dbde580749b2d3a81cda01b7d169a82ba48731823f3ea560b2bef6"
   license "GPL-3.0"
 
 
@@ -22,13 +22,14 @@ class Darktable < Formula
   depends_on "libsecret" => :optional
   depends_on "libsoup@2" => :optional
   depends_on "llvm" => :build  # darktable crashed on load with llvm@12
-  depends_on "lua@5.3"
+  depends_on "lua@5.4"
   depends_on "luarocks" => :build
   depends_on "osm-gps-map" => :optional
   depends_on "po4a"
   depends_on "portmidi" => :optional
   depends_on "pugixml"
   depends_on "perl" => :recommended
+  depends_on "sdl2"
 
 
   def caveats
@@ -54,13 +55,13 @@ class Darktable < Formula
   end
 
   def install
-    kegs = ["curl", "lua@5.3"]
+    kegs = ["curl", "lua@5.4", "sdl2"]
     ldflags = kegs.map { |k| "-L#{Formula[k].opt_lib}" }
     cppflags = kegs.map { |k| "-I#{Formula[k].opt_include}" }
     pkg_config_path = kegs.map { |k| Formula[k].opt_lib/"pkgconfig" }
     openssl_dir = Formula["openssl"].opt_prefix
 
-    lua_dir = Formula['lua@5.3'].opt_prefix
+    lua_dir = Formula['lua@5.4'].opt_prefix
     lua_tree = libexec/"luarocks"
 
     if MacOS.version >= :catalina
@@ -75,9 +76,9 @@ class Darktable < Formula
     build_extra << "--enable-graphicsmagick" if build.with? "graphicsmagick"
     build_extra << "--disable-imagemagick" if build.without? "imagemagick"
 
-    system "luarocks", "--lua-dir", lua_dir, "--tree", lua_tree, "--lua-version", "5.3", "install", "luasec", "OPENSSL_DIR=#{openssl_dir}"
+    system "luarocks", "--lua-dir", lua_dir, "--tree", lua_tree, "--lua-version", "5.4", "install", "luasec", "OPENSSL_DIR=#{openssl_dir}"
     # 2.1.0-1 needed to avoid _lua_objlen error: https://stackoverflow.com/a/50499755
-    system "luarocks", "--lua-dir", lua_dir, "--tree", lua_tree, "--lua-version", "5.3", "install", "lua-cjson", "2.1.0-1", "OPENSSL_DIR=#{openssl_dir}"
+    system "luarocks", "--lua-dir", lua_dir, "--tree", lua_tree, "--lua-version", "5.4", "install", "lua-cjson", "2.1.0-1", "OPENSSL_DIR=#{openssl_dir}"
 
     with_env({ "LDFLAGS"          => ldflags.join(" "),
                "CPPFLAGS"         => cppflags.join(" "),
@@ -90,7 +91,7 @@ class Darktable < Formula
     Dir[libexec/"bin/*"].each do |dt_bin|
       dt_path = Pathname.new(dt_bin)
       dt_name = dt_path.basename
-      (bin/dt_name).write_env_script(dt_path, { LUA_PATH: lua_tree/'share/lua/5.3/?.lua;;', LUA_CPATH: lua_tree/'lib/lua/5.3/?.so;;' })
+      (bin/dt_name).write_env_script(dt_path, { LUA_PATH: lua_tree/'share/lua/5.4/?.lua;;', LUA_CPATH: lua_tree/'lib/lua/5.4/?.so;;' })
     end
   end
 
