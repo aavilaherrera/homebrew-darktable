@@ -47,7 +47,7 @@ class Darktable < Formula
 
       ImageMagick and GraphicsMagick should both fulfill the same requirement.
       "--with-graphicsmagick" implies "./build.sh --enable-graphicsmagick" and
-      "--without-imagemagick" implies "./build.sh --disable-graphicsmagick".
+      "--without-imagemagick" implies "./build.sh --disable-imagemagick".
       If not specified, building these features will depend on whether CMake
       can autodetect dependencies:
       https://github.com/darktable-org/darktable/blob/master/build.sh#L173-L176.
