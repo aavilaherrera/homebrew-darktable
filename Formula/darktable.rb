@@ -1,8 +1,8 @@
 class Darktable < Formula
   desc "An open source photography workflow application and raw developer"
   homepage "https://www.darktable.org"
-  url "https://github.com/darktable-org/darktable/releases/download/release-3.8.1/darktable-3.8.1.tar.xz"
-  sha256 "81ee069054dbde580749b2d3a81cda01b7d169a82ba48731823f3ea560b2bef6"
+  url "https://github.com/darktable-org/darktable/releases/download/release-4.0.1/darktable-4.0.1.tar.xz"
+  sha256 "5fef81e0c0079977a3cdc3627eed777280c2346d023c5d176c1f4a62cbe51d68"
   license "GPL-3.0"
 
 
@@ -10,17 +10,22 @@ class Darktable < Formula
   depends_on "curl"
   depends_on "desktop-file-utils" => :optional
   depends_on "exiv2"
+  depends_on "glib"
   depends_on "gmic" => :optional
-  depends_on "gphoto2"
   depends_on "graphicsmagick" => :optional
+  depends_on "gtk+3"
   depends_on "imagemagick" => :recommended
   depends_on "intltool" => "with-perl"
   depends_on "iso-codes" => :optional
   depends_on "json-glib"
   depends_on "lensfun" => :optional
   depends_on "libavif" => :optional
+  depends_on "libgphoto2" => :recommended
+  depends_on "libheif" => :recommended
+  depends_on "libomp" => :optional
   depends_on "libsecret" => :optional
   depends_on "libsoup@2" => :optional
+  depends_on "little-cms2"
   depends_on "llvm" => :build  # darktable crashed on load with llvm@12
   depends_on "lua@5.4"
   depends_on "luarocks" => :build
@@ -30,7 +35,12 @@ class Darktable < Formula
   depends_on "pugixml"
   depends_on "perl" => :recommended
   depends_on "sdl2"
+  # depends_on "sqlite"  # macOS provides sqlite
 
+  patch do
+    url "https://github.com/darktable-org/darktable/commit/43185c859b75291bb91470feb718f9d32658f8a1.patch"
+    sha256 "c42b5791675226db1d8b44b4c6039ab187dd179df63564cf4439ff46412e8402"
+  end
 
   def caveats
     <<~EOS
