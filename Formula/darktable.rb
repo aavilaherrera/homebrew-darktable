@@ -1,8 +1,8 @@
 class Darktable < Formula
   desc "An open source photography workflow application and raw developer"
   homepage "https://www.darktable.org"
-  url "https://github.com/darktable-org/darktable/releases/download/release-4.0.1/darktable-4.0.1.tar.xz"
-  sha256 "5fef81e0c0079977a3cdc3627eed777280c2346d023c5d176c1f4a62cbe51d68"
+  url "https://github.com/darktable-org/darktable/releases/download/release-4.2.0/darktable-4.2.0.tar.xz"
+  sha256 "18b0917fdfe9b09f66c279a681cc3bd52894a566852bbf04b2e179ecfdb11af9"
   license "GPL-3.0"
 
 
@@ -18,7 +18,7 @@ class Darktable < Formula
   depends_on "intltool" => "with-perl"
   depends_on "iso-codes" => :optional
   depends_on "json-glib"
-  depends_on "lensfun" => :optional
+  depends_on "lensfun"
   depends_on "libavif" => :optional
   depends_on "libgphoto2" => :recommended
   depends_on "libheif" => :recommended
@@ -29,6 +29,7 @@ class Darktable < Formula
   depends_on "llvm" => :build  # darktable crashed on load with llvm@12
   depends_on "lua@5.4"
   depends_on "luarocks" => :build
+  depends_on "jpeg-xl" => :optional
   depends_on "osm-gps-map" => :optional
   depends_on "po4a"
   depends_on "portmidi" => :optional
@@ -37,10 +38,6 @@ class Darktable < Formula
   depends_on "sdl2"
   # depends_on "sqlite"  # macOS provides sqlite
 
-  patch do
-    url "https://github.com/darktable-org/darktable/commit/43185c859b75291bb91470feb718f9d32658f8a1.patch"
-    sha256 "c42b5791675226db1d8b44b4c6039ab187dd179df63564cf4439ff46412e8402"
-  end
 
   def caveats
     <<~EOS
