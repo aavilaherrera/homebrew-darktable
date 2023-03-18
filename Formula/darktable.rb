@@ -1,8 +1,8 @@
 class Darktable < Formula
   desc "An open source photography workflow application and raw developer"
   homepage "https://www.darktable.org"
-  url "https://github.com/darktable-org/darktable/releases/download/release-4.2.0/darktable-4.2.0.tar.xz"
-  sha256 "18b0917fdfe9b09f66c279a681cc3bd52894a566852bbf04b2e179ecfdb11af9"
+  url "https://github.com/darktable-org/darktable/releases/download/release-4.2.1/darktable-4.2.1.tar.xz"
+  sha256 "603a39c6074291a601f7feb16ebb453fd0c5b02a6f5d3c7ab6db612eadc97bac"
   license "GPL-3.0"
 
 
